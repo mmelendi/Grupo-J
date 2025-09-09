@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Presentación de Diseño de Algoritmos</title>
+<meta name="author" content="Domingo Gómez Pérez"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/moon.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Presentación de Diseño de Algoritmos</h1><p class="subtitle"></p>
+<h2 class="author">Domingo Gómez Pérez</h2><p class="date">Created: 2025-09-09 mar 16:09</p>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org96aed14">1. Evaluación de la asignatura</a></li>
+<li><a href="#/slide-org54756d5">2. Información de la asignatura</a></li>
+<li><a href="#/slide-org33f9f32">3. Material de la asignatura</a></li>
+<li><a href="#/slide-org0a3ce4e">4. Preguntas centrales del curso</a></li>
+<li><a href="#/slide-orge8fcd11">5. SICP (Alan Perlis)</a></li>
+<li><a href="#/slide-org906e1f9">6. Organización del curso</a></li>
+<li><a href="#/slide-orgc347504">7. Git</a></li>
+<li><a href="#/slide-org643547d">8. Git</a></li>
+<li><a href="#/slide-org3a8d246">9. Practicando Git</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-org96aed14">
+<h2 id="org96aed14"><span class="section-number-2">1.</span> Evaluación de la asignatura</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Tarea</th>
+<th scope="col" class="org-right">Porcentaje de la nota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Problemas</td>
+<td class="org-right">20%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Laboratorios  en grupo</td>
+<td class="org-right">30%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Examen final</td>
+<td class="org-right">50%</td>
+</tr>
+
+<tr>
+<td class="org-left">(nota mínima: 5)</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section>
+<section id="slide-org54756d5">
+<h2 id="org54756d5"><span class="section-number-2">2.</span> Información de la asignatura</h2>
+<ul>
+<li><a href="https://web.unican.es/estudios/Documents/Guias/2025/es/G682.pdf">Guía de la Asignatura</a></li>
+<li><a href="https://github.com/Domingo-Gomez-Perez/DA-2526.git">Repositorio Git</a></li>
+<li><a href="https://moodle.unican.es/course/view.php?id=24803">Moodle de la asignatura</a></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org33f9f32">
+<h2 id="org33f9f32"><span class="section-number-2">3.</span> Material de la asignatura</h2>
+<ul>
+<li><a href="https://sarabander.github.io/sicp/html/Chapter-1.xhtml#Chapter-1">Libro de SICP</a></li>
+<li><a href="https://theswissbay.ch/pdf/Gentoomen%20Library/Algorithms/Algorithm%20Design%20-%20John%20Kleinberg%20-%20%C3%89va%20Tardos.pdf">Diseño de algoritmos</a></li>
+<li>Intérpretes de Racket y Python</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org0a3ce4e">
+<h2 id="org0a3ce4e"><span class="section-number-2">4.</span> Preguntas centrales del curso</h2>
+<ul>
+<li>¿Qué es computar algo?</li>
+<li>¿Cuales son las métricas para evaluar un programa?</li>
+<li>¿Qué es la abstracción?</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orge8fcd11">
+<h2 id="orge8fcd11"><span class="section-number-2">5.</span> SICP (Alan Perlis)</h2>
+<div style="font-size: 60%;">
+<blockquote >
+<p>
+I think that it's extraordinarily important that we in computer
+science keep fun in computing. When it started out, it was an awful
+lot of fun. Of course, the paying customers got shafted every now and
+then, and after a while we began to take their complaints
+seriously. We began to feel as if we really were responsible for the
+successful, error-free perfect use of these machines. I don't think we
+are. I think we're responsible for stretching them, setting them off
+in new directions, and keeping fun in the house. I hope the field of
+computer science never loses its sense of fun. Above all, I hope we
+don't become missionaries. Don't feel as if you're Bible salesmen. The
+world has too many of those already. What you know about computing
+other people will learn. Don't feel as if the key to successful
+computing is only in your hands. What's in your hands, I think and
+hope, is intelligence: the ability to see the machine as more than
+when you were first led up to it, that you can make it more."
+</p>
+</blockquote>
+</section>
+</section>
+<section>
+<section id="slide-org906e1f9">
+<h2 id="org906e1f9"><span class="section-number-2">6.</span> Organización del curso</h2>
+<ul>
+<li>Bloque I: Computación y funciones</li>
+<li>Bloque II: Recursión y teorema maestros</li>
+<li>Bloque III: Estructuras de datos</li>
+<li>Bloque IV: Aplicaciones de estructuras de datos</li>
+<li>Bloque V: Algoritmos probabilistas</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgc347504">
+<h2 id="orgc347504"><span class="section-number-2">7.</span> Git</h2>
+<p>
+Git es un sistema de control de versiones, es decir un programa de
+ordenador en el que se mantiene información sobre los cambios hechos
+en una colección de ficheros y directorios.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org643547d">
+<h2 id="org643547d"><span class="section-number-2">8.</span> Git</h2>
+
+<div id="org2807e7f" class="figure">
+<p><img src="./git.png" alt="git.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org3a8d246">
+<h2 id="org3a8d246"><span class="section-number-2">9.</span> Practicando Git</h2>
+<p>
+<a href="https://learngitbranching.js.org/?locale=es_ES">Learning Git Basics</a>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+width:1200, height:800, controlsLayout: 'edges'
+});
+
+</script>
+</body>
+</html>
