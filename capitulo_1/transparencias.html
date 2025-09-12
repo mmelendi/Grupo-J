@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Computación y Procedimientos</title>
+<meta name="author" content="Domingo Gómez Pérez"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css" id="theme"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Computación y Procedimientos</h1><h2 class="author">Domingo Gómez Pérez</h2><h2 class="date">12 de Septiembre 2025</h2><p class="date">Created: 2025-09-12 vie 16:01</p>
+</section>
+<section id="table-of-contents-section">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#slide-1">1. Capítulo 1: Computación y Procedimientos</a>
+<ul>
+<li><a href="#slide-1-1">1.1. Ingredientes necesarios</a></li>
+<li><a href="#slide-1-2">1.2. Introducción</a>
+<ul>
+<li><a href="#slide-1-2-1">1.2.1. Reglas de Evaluación</a></li>
+<li><a href="#slide-1-2-2">1.2.2. Funciones</a></li>
+<li><a href="#slide-1-2-3">1.2.3. Sustitución</a></li>
+<li><a href="#slide-1-2-4">1.2.4. Sustitución</a></li>
+<li><a href="#slide-1-2-5">1.2.5. Orden de Evaluación</a></li>
+<li><a href="#slide-1-2-6">1.2.6. Idea Profunda</a></li>
+<li><a href="#slide-1-2-7">1.2.7. Métricas y evaluación de los modelos de computación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#slide-2">2. Scheme</a>
+<ul>
+<li><a href="#slide-2-1">2.1. Sintaxis de Scheme: Objetos y Operaciones Básicas</a></li>
+<li><a href="#slide-2-2">2.2. Sintaxis de Scheme: Nombres y Asignación</a></li>
+<li><a href="#slide-2-3">2.3. Sintaxis de Scheme: Reglas de Evaluación</a></li>
+<li><a href="#slide-2-4">2.4. Sintaxis de Scheme: Funciones</a></li>
+<li><a href="#slide-2-5">2.5. Sintaxis de Scheme: Funciones</a></li>
+<li><a href="#slide-2-6">2.6. Sintaxis de Scheme: Funciones</a></li>
+<li><a href="#slide-2-7">2.7. El órden de evaluación</a></li>
+<li><a href="#slide-2-8">2.8. Formas especiales</a></li>
+<li><a href="#slide-2-9">2.9. Ejemplo</a></li>
+<li><a href="#slide-2-10">2.10. Resumen</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1.</span> Capítulo 1: Computación y Procedimientos</h2>
+<p>
+El tema general de este capítulo es introducir sobre la "computación", no como un tutorial de Scheme.
+</p>
+</section>
+<section id="slide-1-1">
+<h3 id="1-1"><span class="section-number-3">1.1.</span> Ingredientes necesarios</h3>
+<p>
+Los elementos mínimos para entender la computación son:
+</p>
+<ul>
+<li>Objetos primitivos (enteros, booleanos, suma, resta, etc.)</li>
+<li>Reglas de evaluación y composición de expresiones</li>
+<li>Métodos para realizar abstracciones</li>
+<li>Mecanismos para replicar patrones (definición de funciones)</li>
+
+</ul>
+</section>
+<section id="slide-1-2">
+<h3 id="1-2"><span class="section-number-3">1.2.</span> Introducción</h3>
+<p>
+Toda computación  se basa en operaciones básicas. Por ejemplo, hay números y sus operaciones:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">42
+3.7
+42 + 13
+3.7 * 6.1
+</pre>
+</div>
+
+<p>
+También es posible asignar nombres a los valores:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">radio = 5
+pi = 3.14159
+&#225;rea = pi * radio * radio
+</pre>
+</div>
+</section>
+<section id="slide-1-2-1">
+<h4 id="1-2-1"><span class="section-number-4">1.2.1.</span> Reglas de Evaluación</h4>
+<p>
+Existen reglas que dictan el orden en que se evalúan los operadores. Por ejemplo, considera:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">(2 + 4 * 6) * (3 + 5 + 7)
+</pre>
+</div>
+
+<p>
+Así es como podrías evaluar lo anterior, paso a paso:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">(2 + 4 * 6) * (3 + 5 + 7)
+(2 + 24) * (3 + 5 + 7)
+26 * (3 + 5 + 7)
+26 * (8 + 7)
+26 * 15
+390
+</pre>
+</div>
+
+<p>
+La idea de hacer las cosas en pasos individuales es importante porque así es como funcionan los ordenadores.
+</p>
+</section>
+<section id="slide-1-2-2">
+<h4 id="1-2-2"><span class="section-number-4">1.2.2.</span> Funciones</h4>
+<p>
+Los lenguajes de programación tienen funciones. Por ejemplo, en clase de matemáticas, podrías describir una función así:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(x) = 3*x*x + 2*x + 1
+</pre>
+</div>
+
+<p>
+Las funciones se "aplican" a valores. Por ejemplo:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(2) -&gt; 17
+f(10) -&gt; 321
+</pre>
+</div>
+</section>
+<section id="slide-1-2-3">
+<h4 id="1-2-3"><span class="section-number-4">1.2.3.</span> Sustitución</h4>
+<p>
+Las funciones se evalúan mediante sustitución simbólica. Es decir, literalmente reemplazas el símbolo "x" con el valor entre paréntesis.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(x) = 3*x*x + 2*x + 1
+f(2) = 3*2*2 + 2*2 + 1
+     = 6*2 + 2*2 + 1
+     = 12 + 4 + 1
+     = 17
+</pre>
+</div>
+</section>
+<section id="slide-1-2-4">
+<h4 id="1-2-4"><span class="section-number-4">1.2.4.</span> Sustitución</h4>
+<p>
+Pero aquí hay una pregunta sutil: ¿cómo evalúas esto?
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(1+1) = ????
+</pre>
+</div>
+</section>
+<section id="slide-1-2-5">
+<h4 id="1-2-5"><span class="section-number-4">1.2.5.</span> Orden de Evaluación</h4>
+<p>
+Un enfoque es evaluar primero `1+1`, luego aplicar la función (orden aplicativo):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(1+1) = f(2) = 3*2*2 + 2*2 + 1 = 17
+</pre>
+</div>
+
+<p>
+Sin embargo, se puede sustituir  `1+1` en lugar de `x` así (orden normal):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">f(1+1) = 3*(1+1)*(1+1) + (1+1)*(1+1) + 1
+       = 3*2*(1+1) + (1+1)*(1+1) + 1
+       = 3*2*2 + (1+1)*(1+1) + 1
+       = 6*2 + (1+1)*(1+1) + 1
+       = 12 + (1+1)*(1+1) + 1
+       = 12 + 2*2 + 1
+       = 12 + 4 + 1
+       = 17
+</pre>
+</div>
+
+<p>
+Esto se conoce como "orden normal" o a veces "lazy evaluation".
+</p>
+</section>
+<section id="slide-1-2-6">
+<h4 id="1-2-6"><span class="section-number-4">1.2.6.</span> Idea Profunda</h4>
+<p>
+Toda la computación puede describirse mediante la evaluación de expresiones y la aplicación de funciones.
+</p>
+
+<p>
+Esto se conoce como <b><b>sistema de reescritura</b></b> y esta es la idea profunda detrás de SICP.
+</p>
+</section>
+<section id="slide-1-2-7">
+<h4 id="1-2-7"><span class="section-number-4">1.2.7.</span> Métricas y evaluación de los modelos de computación</h4>
+<ul>
+<li><b><b>Complejidad Temporal</b></b>: ¿Cuántas operaciones primitivas requiere el algoritmo?</li>
+<li><b><b>Complejidad Espacial</b></b>: ¿Cuánta memoria utiliza un algoritmo?</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2.</span> Scheme</h2>
+<p>
+Scheme es un lenguaje de programación que ejemplifica los conceptos de computación que hemos discutido.
+</p>
+</section>
+<section id="slide-2-1">
+<h3 id="2-1"><span class="section-number-3">2.1.</span> Sintaxis de Scheme: Objetos y Operaciones Básicas</h3>
+<p>
+Hay números y operaciones básicas:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">42          <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 42
+</span>+           <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; #&lt;procedure:+&gt;</span>
+</pre>
+</div>
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">(+ 42 37)          <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 79
+</span>(- 1000 334)       <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 666
+</span>(* 5 99)           <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 495
+</span>(+ 2 3 4 5)        <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 14</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-2">
+<h3 id="2-2"><span class="section-number-3">2.2.</span> Sintaxis de Scheme: Nombres y Asignación</h3>
+<p>
+Los nombres se asignan con `define`:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">define</span> <span style="color: #4ae2ff;">radio</span> 5)          <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; radio
+</span>(<span style="color: #ff7f86;">define</span> <span style="color: #4ae2ff;">pi</span> 3.14159)      <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; pi
+</span>(<span style="color: #ff7f86;">define</span> <span style="color: #4ae2ff;">&#225;rea</span> (* pi radio radio)) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; &#225;rea
+</span>&#225;rea                      <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 78.53975</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-3">
+<h3 id="2-3"><span class="section-number-3">2.3.</span> Sintaxis de Scheme: Reglas de Evaluación</h3>
+<p>
+Las expresiones se evalúan de adentro hacia afuera:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(+ 2 (* 4 6))     <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 26
+</span>(* (+ 2 4) (+ 3 5 7)) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 390</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-4">
+<h3 id="2-4"><span class="section-number-3">2.4.</span> Sintaxis de Scheme: Funciones</h3>
+<p>
+Las funciones se definen con `define` y se aplican con paréntesis:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">define</span> (<span style="color: #4ae2ff;">f</span> x) (+ (* 3 x x) (* 2 x)
+                                 1)) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; f
+</span>(f 2)               <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 17
+</span>(f 10)              <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 321</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-5">
+<h3 id="2-5"><span class="section-number-3">2.5.</span> Sintaxis de Scheme: Funciones</h3>
+<p>
+Scheme permite un conjunto más rico de símbolos en los nombres. Por ejemplo,
+puedes incluir guiones, signos de interrogación e incluso arrojar
+algunos símbolos.  
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">define</span> (<span style="color: #4ae2ff;">f-primario?</span> x) (&gt; x 0)) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; f-
+</span>primario?
+(f-primario? 7)                  <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; #t
+</span>(f-primario? -1)                 <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; #f</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-6">
+<h3 id="2-6"><span class="section-number-3">2.6.</span> Sintaxis de Scheme: Funciones</h3>
+<p>
+Scheme también permite definir funciones lambda:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">define</span> <span style="color: #4ae2ff;">f</span> (<span style="color: #ff7f86;">lambda</span> (x) (+ (* 3 x x) (* 2 x) 1))) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; f
+</span>(f 2)               <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 17
+</span>(f 10)              <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 321</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-7">
+<h3 id="2-7"><span class="section-number-3">2.7.</span> El órden de evaluación</h3>
+<p>
+Scheme utiliza evaluación por defecto en orden aplicativo:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(f (+ 1 1)) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; f(2) -&gt; 17</span>
+</pre>
+</div>
+
+<p>
+Sin embargo hay ``formas especiales`` que no siguen esta regla, por ejemplo `if`:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">if</span> (&gt; 2 3) 42 99) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; 99</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-8">
+<h3 id="2-8"><span class="section-number-3">2.8.</span> Formas especiales</h3>
+<p>
+Las formas especiales son construcciones de lenguaje que no siguen las reglas normales de evaluación. Algunos ejemplos comunes incluyen:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">if</span> condici&#243;n entonces else) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">Evaluaci&#243;n condicional
+</span>(<span style="color: #ff7f86;">or</span> expresi&#243;n1 expresi&#243;n2 ...) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">Evaluaci&#243;n l&#243;gica "o"
+</span>(<span style="color: #ff7f86;">and</span> expresi&#243;n1 expresi&#243;n2 ...) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">Evaluaci&#243;n l&#243;gica "y"
+</span>(not expresi&#243;n) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">Negaci&#243;n l&#243;gica
+</span>(<span style="color: #ff7f86;">cond</span> (pred1 expr1)
+       (pred2 expr2)
+<span style="color: #8D8D84; font-style: italic;">;       </span><span style="color: #ff9070; font-style: italic;">...
+</span>      (predn exprn))
+</pre>
+</div>
+</section>
+<section id="slide-2-9">
+<h3 id="2-9"><span class="section-number-3">2.9.</span> Ejemplo</h3>
+<p>
+Aquí hay un ejemplo que combina varios conceptos:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span style="color: #ff7f86;">if</span> (&gt; 1 0) + -) 2 3) <span style="color: #8D8D84; font-style: italic;">; </span><span style="color: #ff9070; font-style: italic;">-&gt; (+ 2 3) -&gt; 5</span>
+</pre>
+</div>
+</section>
+<section id="slide-2-10">
+<h3 id="2-10"><span class="section-number-3">2.10.</span> Resumen</h3>
+<p>
+Hemos cubierto los conceptos básicos de la computación y cómo se implementan en Scheme. Estos fundamentos son esenciales para entender temas más avanzados en ciencias de la computación.
+</p>
+<ul>
+<li>La complejidad temporal está clara, es el número de pasos.</li>
+<li>La complejidad espacial es más sutil, depende de cómo se manejen las llamadas, pero se mide en símbolos en la expansión más larga.</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/search/search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+transition: 'convex',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
