@@ -1,3 +1,5 @@
+# Miembros: mar, Mario, Marcos, Luis, Juan, Martin
+
 # Diseño de Algoritmos con SICP 
 
 "Este libro está dedicado, con respeto y admiración, al espíritu que
