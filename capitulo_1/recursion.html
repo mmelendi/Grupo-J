@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Generated on 2025-09-16 mar 16:03 -->
+<meta charset="utf-8"/>
+<title>Recursión e iteración</title>
+<meta name="author" content="Domingo Gómez Pérez"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/simple.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/zenburn.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Recursión e iteración</h1><h2 class="author">Domingo Gómez Pérez</h2><h2 class="date">16 de Septiembre 2025</h2><p class="date">Created: 2025-09-16 mar 16:03</p>
+</section>
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1.</span> Descripción de un problema</h2>
+<p>
+El acto de programar es pasar de un modelo <b>descriptivo</b> del problema
+a un modelo dinámico del problema.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2.</span> Calculando la raíz cuadrada</h2>
+<p>
+Calcular la raíz cuadrada de \(\sqrt{x}\) es el número 
+\(y\) tal que \(y^2 = x\). 
+</p>
+
+<p>
+En general, solamente podemos encontrar una <b>aproximación</b>, por lo
+tanto nuestra solución devolverá una solución.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><span class="section-number-2">3.</span> Pseudocódigo</h2>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (sqrt-iter guess x)
+	(if (good-enough? guess x)
+	    guess
+	  (sqrt-iter (improved guess x) x)
+	  )
+	)
+
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-4">
+<h2 id="4"><span class="section-number-2">4.</span> Procedimientos de caja negra</h2>
+<p>
+Un <b>procedimiento caja-negra</b> es aquel cuyo funcionamiento interno no
+es relevante para quien lo utiliza; solo importa qué hace y no cómo lo
+hace, esto es:
+</p>
+<ol>
+<li>El nombre del procedimiento.</li>
+<li>Los argumentos que recibe.</li>
+<li>El resultado que produce.</li>
+
+</ol>
+</section>
+</section>
+<section>
+<section id="slide-5">
+<h2 id="5"><span class="section-number-2">5.</span> El modelo dinámico</h2>
+<div class="org-src-container">
+
+<pre><code class="lisp" >(define (+1p x) (+ x 1)) ;sucesor
+(define (-1p x) (- x 1)) ; predecesor
+
+; definición de suma según Dedeking
+(define (suma-iter x y)
+    (if (= x 0)
+	y
+	(suma-iter (-1p x) (+1p y))
+	)
+  )
+
+(define (suma-rec x y)
+    (if (= x 0)
+	y
+	(+1p (suma-rec (-1p x) y))
+	)
+  )
+
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-6">
+<h2 id="6"><span class="section-number-2">6.</span> Procedimiento iterativo</h2>
+<div style="font-size:80%; text-align:left;">
+1. (suma-iter 1 4)  <br>
+2. (if (= 1 0) 4 (suma-iter (-1p 1) (+1p 4)))  <br>
+3. (-1p 1) = 0, (+1p 4) = 5  <br>
+4. (suma-iter 0 5)  <br>
+5. (if (= 0 0) 5 (suma-iter ...))  <br>
+6. 5<br>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-7">
+<h2 id="7"><span class="section-number-2">7.</span> Procedimiento recursivo</h2>
+<div style="font-size:80%; text-align:left;">
+1. (suma-rec 2 5)<br>
+2. (if (= 2 0) 5 (+1p (suma-rec (-1p 2) 5))) <br>
+3. (+1p (suma-rec 1 5))) <br>
+4. (+1p (if (= 1 0) 5 (+1p (suma-rec (-1p 1) 5))) <br>
+5. (+1p (if (= 1 0) 5 (+1p (suma-rec (-1p 1) 5))) <br>
+6. (+1p (+1p (suma-rec (-1p 1) 5))) <br>
+7. (+1p (+1p (suma-rec 0 5))) <br>
+...
+</div>
+</section>
+</section>
+<section>
+<section id="slide-8">
+<h2 id="8"><span class="section-number-2">8.</span> Recursividad vs Iteratividad</h2>
+<ul>
+<li>Un <b>procedimiento recursivo</b> es aquel el proceso generado por la ejecución de este procedimiento mantiene información pendiente en la pila de llamadas.</li>
+
+<li>Un <b>procedimiento iterativo</b> es aquel en el que  el estado completo
+del cálculo  del proceso se puede describir mediante un conjunto fijo de variables.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-9">
+<h2 id="9"><span class="section-number-2">9.</span> Resumen</h2>
+<p>
+El procedimiento para resolver un problema es un procedimiento
+<b>recursivo</b>, nos dan una
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+transition: 'slide',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealHighlight ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
