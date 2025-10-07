@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Generated on 2025-09-23 mar 16:28 -->
+<meta charset="utf-8"/>
+<title>Abstracción con funciones</title>
+<meta name="author" content="Domingo Gómez Pérez"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/simple.css" id="theme"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/zenburn.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Abstracción con funciones</h1><h2 class="author">Domingo Gómez Pérez</h2><p class="date">Created: 2025-09-23 mar 16:28</p>
+</section>
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1.</span> Procedimientos de orden alto</h2>
+<p>
+Para poder realizar abstracciones es necesario poder construir
+abstracciones, mediante nombrar patrones comunes.
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (cubo x)
+	(* x x x)) ; es equivalente a sustituir siempre (cubo x)
+                   ; por (* x x x)
+
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2.</span> Procedimientos de orden alto</h2>
+<p>
+El libro pone varios ejemplos de funciones que calculan la suma de
+diferentes funciones:
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (cuadrado a) (* a a))
+(define (suma-cuadrados a b)
+	(if (&gt; a  b)
+	    0
+	  (+ (cuadrado a) (suma-cuadrados (+ a 1) b))))
+(define (suma a b)
+	(if (&gt; a  b)
+	    0
+	  (+ a (suma-cuadrados (+ a 1) b))))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><span class="section-number-2">3.</span> Procedimientos de orden alto</h2>
+<p>
+Estos dos procedimientos son casos particulares de un método <b>más
+general</b>, es decir, si <b>abstraemos</b>, ese código es equivalente a:
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (suma-gen funcion a b siguiente)
+	(if (&gt; a  b)
+	    0
+	  (+ (funcion a) (suma-gen (siguiente a) b))))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-4">
+<h2 id="4"><span class="section-number-2">4.</span> Procedimientos de orden alto</h2>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (suma-cuadrados a b)
+	(define (sig x) (+ x 1))
+	(suma-gen cuadrado a b sig))
+(define (id x) x)
+(define (suma a b)
+	(define (sig x) (+ x 1))
+	(suma-gen x a b sig))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-5">
+<h2 id="5"><span class="section-number-2">5.</span> Creando funciones: el operador \(\lambda\)</h2>
+<p>
+Uno de los problemas con el código anterior es que necesitamos crear
+funciones dentro de funciones, donde el nombre no es visible desde
+fuera.
+</p>
+
+<p>
+Para ello, existe una forma utilizando <b>lamda</b>
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (suma-cuadrados a b)
+	(suma-gen (lambda (x) (* x x)); el metodo
+		  a
+		  b
+		  (lambda (x) (+ x 1))))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-6">
+<h2 id="6"><span class="section-number-2">6.</span> Partes de componentes de \(\lambda\)</h2>
+<ul>
+<li><code>lambda</code>: palabra clave que indica la creación de una función anónima.</li>
+<li><code>(x)</code>: lista de parámetros; en este caso, la función toma un argumento llamado <code>x</code>.</li>
+<li><code>(+ x 1)</code>: cuerpo de la función; expresa la operación que se realiza con el argumento, en este caso sumar 1 a <code>x</code>.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-7">
+<h2 id="7"><span class="section-number-2">7.</span> Usos de \(\lambda\)</h2>
+<ul>
+<li>Crear funciones anónimas</li>
+<li>Definir variables locales</li>
+<li>Modificar funciones</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-8">
+<h2 id="8"><span class="section-number-2">8.</span> Definir variables locales</h2>
+<p>
+Queremos evaluar este código:
+</p>
+
+<ul>
+<li><code>a = 1 + x y</code></li>
+<li><code>b = 1 - y</code></li>
+<li><code>f(x, y) = x a^2 + y b + a b</code></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-9">
+<h2 id="9"><span class="section-number-2">9.</span> Código</h2>
+<div class="org-src-container">
+
+<pre><code class="python" >def f(x y):
+    a = 1 + x*y
+    b = 1 - y
+    return x*a*a + y*b + a*b
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (f x y)
+    (let ((a (+ 1 (* x y)))
+          (b (- 1 y)))
+	  (+ (* x a a) (* y b) (* a b))
+    )
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-10">
+<h2 id="10"><span class="section-number-2">10.</span> Código</h2>
+<div class="org-src-container">
+
+<pre><code class="python" >def f(x, y):
+    def helper(a, b):
+        return x*a*a + y*b + a*b
+    return helper(1 + x*y, 1-y)
+</code></pre>
+</div>
+
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define (f x y)
+     ((lambda (a b) (+ (* x a a) (* y b) (* a b))) (+ 1 (* x y)) (- 1 y)))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-11">
+<h2 id="11"><span class="section-number-2">11.</span> Modificar funciones</h2>
+<p>
+El método de la raíz cuadrada es un caso particular de los métodos de
+<b>punto fijo</b>
+</p>
+
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(define tolerance 0.00001)
+(define (fixed-point f first-guess)
+  (define (close-enough? v1 v2)
+    (&lt; (abs (- v1 v2)) 
+       tolerance))
+  (define (try guess)
+    (let ((next (f guess)))
+      (if (close-enough? guess next)
+          next
+          (try next))))
+  (try first-guess))
+(define (sqrt x)
+  (fixed-point 
+   (lambda (y) (average y (/ x y))) 1.0))
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-12">
+<h2 id="12"><span class="section-number-2">12.</span> Los «derechos» de las funciones</h2>
+<p>
+Esto es una idea de Chris Strachey, un lógico que estudio las
+funciones lambda. Según él sus derechos son:
+</p>
+<ul>
+<li>Ser nombradas como variables</li>
+<li>Ser pasadas como argumentos de funciones</li>
+<li>Poder ser retornadas por una función</li>
+<li>Poder ser utilizadas en estructuras de datos</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-13">
+<h2 id="13"><span class="section-number-2">13.</span> Utilizando funciones para los datos</h2>
+<p>
+Las funciones también se utilizan para crear estructuras de datos. 
+Como con las funciones, tenemos que partir de datos primitivos y poder
+combinarlos para poder formar estructuras de datos más complejas.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-14">
+<h2 id="14"><span class="section-number-2">14.</span> La orden cons</h2>
+<p>
+La orden cons, permite generar una tupla de dos elementos.
+Para acceder a cada uno de ellos, hay dos funciones: <b>car</b> y <b>cdr</b>
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(cons 1 2) ; tupla de dos elementos
+(car (cons 1 2)) ; -&gt; 1
+(cdr (cons 1 2)) ; -&gt; 2
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-15">
+<h2 id="15"><span class="section-number-2">15.</span> La orden cons</h2>
+<p>
+Con esta orden se pueden implementar listas de cualquier longitud.
+</p>
+<div class="org-src-container">
+
+<pre><code class="emacs-lisp" >(cons 1 (cons 2 nil)) ; [1|-&gt;[2|-&gt;
+(list 1 2) ; Construccion equivalente 
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-16">
+<h2 id="16"><span class="section-number-2">16.</span> Idea fundamental</h2>
+<p>
+La idea detrás de los algoritmos de está forma, es imitar el
+pensamiento humano, con la aproximación de desarrollar un algoritmo de
+arriba a abajo. Para ello, es necesario <b>abstraer</b> cada función y
+pensar en cada una de ellas como un <b>contrato</b>.
+</p>
+</section>
+</section>
+</div>
+</div>
+Hola
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+transition: 'slide',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealHighlight ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
